@@ -24,9 +24,7 @@ class AuthController extends Controller
 
     public function loginHandler(Request $request)
     {
-
         return redirect()->route('admin.dashboard');
-
     }
 
 

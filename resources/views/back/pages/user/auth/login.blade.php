@@ -26,7 +26,7 @@
             <!-- Checkbox -->
             <div class="d-lg-flex justify-content-end align-items-center mb-4">
                 <div>
-                    <a href="{{ route('user.forgot') }}">Forgot your password?</a>
+                    <a href="{{ route('u.forgot') }}">Forgot your password?</a>
                 </div>
             </div>
             <div>
@@ -38,7 +38,7 @@
             <div class="d-lg-flex justify-content-center align-items-center mt-4">
                 <div>
                     <span>Don’t have an account?
-                        <a href="{{ route('user.register') }}">Register now.</a>
+                        <a href="{{ route('u.register') }}">Register now.</a>
                     </span>
                 </div>
             </div>

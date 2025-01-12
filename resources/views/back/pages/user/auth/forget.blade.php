@@ -22,7 +22,7 @@
             </div>
             <span>
                 Return to
-                <a href="{{ route('user.login') }}">log in</a>
+                <a href="{{ route('u.login') }}">log in</a>
             </span>
         </form>
     </div>

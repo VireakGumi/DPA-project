@@ -47,7 +47,7 @@
             <div class="d-lg-flex justify-content-center align-items-center mt-4">
                 <span>
                     Already have an account?
-                    <a href="{{ route('user.login') }}" class="ms-1">Log in now</a>
+                    <a href="{{ route('u.login') }}" class="ms-1">Log in now</a>
                 </span>
             </div>
             <hr class="my-4">

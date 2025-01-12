@@ -38,6 +38,6 @@ class UserController extends Controller
         $data = [
             'pageTitle' => 'Home Page',
         ];
-        return view('back.pages.dashboard', $data);
+        return view('back.pages.user.home', $data);
     }
 }

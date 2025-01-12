@@ -6,10 +6,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserAuthController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 /**
  * TEST ROUTES
  */
@@ -43,5 +39,5 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/login', 'userLoginHandler')->name('u.login_handler'); // Changed name to avoid conflict
     Route::get('/register', 'userRegisterForm')->name('u.register'); // Added unique name
     Route::get('/forget-password', 'userForgetForm')->name('u.forgot'); // Changed name to avoid conflict
-    Route::get('/home', 'userHome')->name('u.home'); // Added unique name
+    Route::get('/', 'userHome')->name('u.home'); // Added unique name
 });

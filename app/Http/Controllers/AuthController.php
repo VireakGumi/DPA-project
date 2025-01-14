@@ -47,7 +47,7 @@ class AuthController extends Controller
         if($user->roles[0]->id != Role::ROLE_ADMIN) {
             $route = 'u.home';
         }
-        session(['token' => $token->plainTextToken, 'email' => $user->email, ]);
+        store_session_key(User::AuthResourceObj($user->id, $token->plainTextToken));
         return redirect()->route($route)->with([
             'message' => 'User logged in successfully.',
             'data' => new AuthResource(User::AuthResourceObj($user->id, $token->plainTextToken)),
@@ -82,7 +82,7 @@ class AuthController extends Controller
             'pageTitle' => 'User Register',
         ];
 
-        return view('back.pages.user.auth.register', $data);
+        return view('back.pages.auth.register', $data);
     }
 
 }

@@ -22,6 +22,11 @@ class UserController extends Controller
         return view('back.pages.user.auth.login', $data);
     }
 
+    public function userLoginHandler(Request $request)
+    {
+        return redirect()->route('u.home');
+    }
+
     public function userRegisterForm(Request $request)
     {
         $data = [
@@ -45,5 +50,13 @@ class UserController extends Controller
             'pageTitle' => 'Home Page',
         ];
         return view('back.pages.user.home', $data);
+    }
+
+    public function uSearch(Request $request)
+    {
+        $data = [
+            'pageTitle' => 'Search Page',
+        ];
+        return view('back.pages.user.search', $data);
     }
 }

@@ -17,10 +17,7 @@ class CheckLogin
     public function handle(Request $req,Closure $next): Response
     {
         $token = session('token');
-        $user = User::whereHas('tokens', function($query) use ($token) {
-            $query->where('id', $token); // Adjust as necessary based on how you're storing tokens
-        })->first();
-
+        $user = User::whereHas('tokens', function($query) use ($token) {$query->where('id', $token); })->first(['id']);
         if (!$user) {
             return redirect()->route('login')->with('error', 'You need to login.');
         }

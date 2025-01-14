@@ -16,7 +16,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            [ 'id' => 1, 'username' => 'dpaadmin', 'first_name' => 'Admin', 'last_name' => 'DPA', 'display_name' => 'DPA Admin', 'email' => 'admin@dpa.com', 'password' => "11223344Aa!", 'picture' => User::DEFAULT_AVATAR]
+            [ 'id' => 1, 'username' => 'dpaadmin', 'first_name' => 'Admin', 'last_name' => 'DPA', 'display_name' => 'DPA Admin', 'email' => 'admin@dpa.com', 'password' => "11223344Aa!", 'picture' => User::DEFAULT_AVATAR],
+            [ 'id' => 2, 'username' => 'vireak', 'first_name' => 'Vireak', 'last_name' => 'Roeun', 'display_name' => 'Vireak Roeun', 'email' => '   @gmail.com', 'password' => "11223344Aa!", 'picture' => User::DEFAULT_AVATAR]
         ];
         foreach ($users as $value) {
             $user = User::create($value);

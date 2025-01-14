@@ -7,7 +7,7 @@
             <h1 class="mb-1 fw-bold">Log in</h1>
         </div>
         <!-- Form -->
-        <form method="post" action="#" class="needs-validation" novalidate>
+        <form method="post" action="{{ route('u.login_handler') }}" class="needs-validation" novalidate>
             @csrf
             <!-- Username -->
             <div class="mb-3">

@@ -35,9 +35,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
  * USER ROUTES
  */
 Route::controller(UserController::class)->group(function () {
-    Route::get('/login', 'userLoginForm')->name('u.login'); // Changed name to avoid conflict
-    Route::post('/login', 'userLoginHandler')->name('u.login_handler'); // Changed name to avoid conflict
-    Route::get('/register', 'userRegisterForm')->name('u.register'); // Added unique name
-    Route::get('/forget-password', 'userForgetForm')->name('u.forgot'); // Changed name to avoid conflict
-    Route::get('/', 'userHome')->name('u.home'); // Added unique name
+    Route::get('/login', 'userLoginForm')->name('u.login');
+    Route::post('/login', 'userLoginHandler')->name('u.login_handler');
+    Route::get('/register', 'userRegisterForm')->name('u.register');
+    Route::get('/forget-password', 'userForgetForm')->name('u.forgot');
+    Route::get('/', 'userHome')->name('u.home');
+
+    Route::get('/search', 'uSearch')->name('u.search');
 });

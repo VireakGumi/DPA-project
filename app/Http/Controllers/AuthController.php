@@ -48,17 +48,14 @@ class AuthController extends Controller
             $route = 'u.home';
         }
         store_session_key(User::AuthResourceObj($user->id, $token->plainTextToken));
-        return redirect()->route($route)->with([
-            'message' => 'User logged in successfully.',
-            'data' => new AuthResource(User::AuthResourceObj($user->id, $token->plainTextToken)),
-            'status' => 200,
-        ]);
+        return redirect()->route($route)->with('message', 'User login successfully.');
     }
 
     // logout route
     public function logout(Request $req)
     {
         $req->user('sanctum')->currentAccessToken()->delete();
+        destroy_session_key();
         return redirect()->route('admin.login')->with('message', 'User logged out successfully.');
     }
     public function loginForm(Request $request)

@@ -9,7 +9,7 @@ use App\Http\Controllers\UserAuthController;
 
 /**
  * PUBLIC ROUTES
-*/
+ */
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'loginForm')->name('login');
     Route::post('/login', 'LoginHandler')->name('login_handler'); // Changed name to avoid conflict
@@ -19,7 +19,7 @@ Route::controller(AuthController::class)->group(function () {
 
 /**
  * ADMIN ROUTES
-*/
+ */
 Route::prefix('admin')->name('admin.')->group(function () {
     // Protected routes for authenticated admins
     Route::controller(AdminController::class)->group(function () {
@@ -29,7 +29,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 /**
  * USER ROUTES
-*/
+ */
 Route::controller(UserController::class)->group(function () {
     Route::get('/', 'userHome')->name('u.home'); // Added unique name
     Route::get('/search', 'uSearch')->name('u.search');

@@ -18,11 +18,12 @@ class CheckAdminRole
     public function handle($req, Closure $next, ...$guards)
     {
         $token = get_session_key('token');
-        $user = User::whereHas('tokens.', function($query) use ($token) {$query->where('id', $token); })->first(['id']);
+        $user = User::whereHas('tokens', function($query) use ($token) {$query->where('id', $token); })->first(['id']);
         if (!$user) {
             return redirect()->route('login')->with('error', 'You need to login.');
         }
-        $userRole = $user->roles[0]->id ?? null; // Use null coalescing to avoid errors
+        $userRole = $user->roles[0]->id ?? null; 
+        
         if ($userRole == Role::ROLE_ADMIN) {
             return $next($req);
         }

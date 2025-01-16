@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\loginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\UserDevice;
+use Carbon\Carbon;
 use Stevebauman\Location\Facades\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -75,6 +78,43 @@ class AuthController extends Controller
         ];
 
         return view('back.pages.auth.register', $data);
+    }
+
+    public function RegisterHandler(RegisterRequest $req) 
+    {
+        $user = new User($req->only(['email', 'password']));
+        $user->full_name = $req->full_name;
+        $user->username = strtolower(str_replace(' ', '', $req->full_name));
+        $user->status = User::STATUS_IS_ACTIVE;
+        $user->picture = User::DEFAULT_AVATAR;
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+        $user->roles()->sync([Role::ROLE_USER]);
+
+        $token       = $user->createToken($user->id);
+        $user->token = $token->plainTextToken;
+        $ip          = $req->ip();
+        $location    = Location::get($ip);
+        $deviceType  = UserDevice::DEVICE_TYPE_UNKNOWN;
+        if (Agent::isDesktop()) {
+            $deviceType = UserDevice::DEVICE_TYPE_BROWSER;
+        } else if (Agent::isMobile()) {
+            $deviceType = UserDevice::DEVICE_TYPE_MOBILE;
+        }
+        $userDevice  = new UserDevice([
+            'token_id'    => $token->accessToken->id,
+            'device_id'   => $req->input('device_id'),
+            'device_name' => Agent::device(),
+            'os'          => Agent::platform(),
+            'ip'          => $ip,
+            'browser'     => Agent::browser(),
+            'location'    => $location ? $location->cityName . " . " .  $location->countryName : null,
+            'device_type' => $deviceType
+        ]);
+        $userDevice->user_id = $user->id;
+        $userDevice->save();
+        store_session_key(User::AuthResourceObj($user->id, $token->plainTextToken));
+        return redirect()->route('u.home')->with('message', 'User Register successfully.');
     }
 
 }

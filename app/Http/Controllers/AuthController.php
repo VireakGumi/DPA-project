@@ -43,11 +43,8 @@ class AuthController extends Controller
         ]);
         $userDevice->user_id = $user->id;
         $userDevice->save();
-        $route = 'admin.dashboard';
-        if($user->roles[0]->id != Role::ROLE_ADMIN) {
-            $route = 'u.home';
-        }
         store_session_key(User::AuthResourceObj($user->id, $token->plainTextToken));
+        $route = check_admin_role($user);
         return redirect()->route($route)->with('message', 'User login successfully.');
     }
 
@@ -56,7 +53,7 @@ class AuthController extends Controller
     {
         $req->user('sanctum')->currentAccessToken()->delete();
         destroy_session_key();
-        return redirect()->route('admin.login')->with('message', 'User logged out successfully.');
+        return redirect()->route('login')->with('message', 'User logged out successfully.');
     }
     public function loginForm(Request $request)
     {

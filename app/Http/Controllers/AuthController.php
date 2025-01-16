@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\loginRequest;
-use App\Http\Resources\User\AuthResource;
-use App\Models\Role;
 use App\Models\User;
 use App\Models\UserDevice;
 use Stevebauman\Location\Facades\Location;

@@ -82,7 +82,7 @@ class User extends Authenticatable
 
     protected function GetUserProfile() {
         $token = get_session_key('token');
-        $user  = User::whereHas('tokens.', function($query) use ($token) {$query->where('id', $token); })->first(['id', 'username', 'display_name', 'email', 'email_verified_at','picture', 'bio','status','created_at']);
+        $user  = User::whereHas('tokens', function($query) use ($token) {$query->where('id', $token); })->first(['id', 'username', 'display_name', 'email', 'email_verified_at','picture', 'bio','status','created_at']);
         if(!$user) return null;
         return $user;
     }

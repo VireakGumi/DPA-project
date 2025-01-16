@@ -11,7 +11,7 @@
             </span> --}}
         </div>
         <!-- Form -->
-        <form method="post" action="{{ route('admin.login_handler') }}" class="needs-validation" novalidate>
+        <form method="post" action="{{ route('login_handler') }}" class="needs-validation" novalidate>
             @csrf
             <!-- Username -->
             <div class="mb-3">
@@ -30,7 +30,7 @@
             <!-- Checkbox -->
             <div class="d-lg-flex justify-content-end align-items-center mb-4">
                 <div>
-                    <a href="{{ route('admin.forgot') }}">Forgot your password?</a>
+                    <a href="{{ route('forgot') }}">Forgot your password?</a>
                 </div>
             </div>
             <div>

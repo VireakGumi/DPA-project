@@ -66,9 +66,9 @@
                     </div>
                     <a href="#" class="btn btn-icon btn-light rounded-circle d-none d-md-inline-flex ms-2"><i
                             class="fe fe-shopping-cart align-middle"></i></a>
-                    <a href="{{ route('u.login') }}" class="btn btn-outline-primary ms-2 d-none d-lg-block">Log
+                    <a href="{{ route('login') }}" class="btn btn-outline-primary ms-2 d-none d-lg-block">Log
                         in</a>
-                    <a href="{{ route('u.register') }}" class="btn btn-primary ms-2 d-none d-lg-block">Register</a>
+                    <a href="{{ route('register') }}" class="btn btn-primary ms-2 d-none d-lg-block">Register</a>
                     <!-- Button -->
                     <button class="navbar-toggler collapsed ms-2 ms-lg-0" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false"

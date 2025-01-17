@@ -15,7 +15,7 @@
                         </div>
                         <div class="lh-1">
                             <h2 class="mb-0">
-                                {{ $user->display_name }}
+                                {{ $user->full_name }}
                                 <a href="#" data-bs-toggle="tooltip" data-placement="top" aria-label="Beginner"
                                     data-bs-original-title="Beginner">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -193,28 +193,10 @@
                         <p class="mb-4">Edit your personal information and address.</p>
                         <!-- Form -->
                         <form wire:submit="updatePersonalDetails()" class="row gx-3 needs-validation" novalidate="">
-                            <!-- First name -->
-                            <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="fname">First Name</label>
-                                <input wire:model="fname" type="text" id="fname" class="form-control"
-                                    placeholder="Enter your first name" required="">
-                                @error('fname')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <!-- Last name -->
-                            <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label" for="lname">Last Name</label>
-                                <input wire:model="lname" type="text" id="lname" class="form-control"
-                                    placeholder="Enter your last name" required="">
-                                @error('lname')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
                             {{-- display-name --}}
                             <div class="mb-3 col-12 col-md-12">
                                 <label class="form-label" for="display-name">Full Name</label>
-                                <input wire:model="fullname" type="text" id="display-name" class="form-control"
+                                <input wire:model="fullname" type="text" id="fullname" class="form-control"
                                     placeholder="Enter your full name">
                                 @error('fullname')
                                     <span class="text-danger">{{ $message }}</span>

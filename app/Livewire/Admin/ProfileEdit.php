@@ -28,7 +28,7 @@ class ProfileEdit extends Component
         $user = new UserResource(User::GetUserProfile());
         $this->fname = $user->first_name;
         $this->lname = $user->last_name;
-        $this->fullname = $user->display_name;
+        $this->fullname = $user->full_name;
         $this->email = $user->email;
         $this->username = $user->username;
 
@@ -40,15 +40,11 @@ class ProfileEdit extends Component
 
         // validate
         $this->validate([
-            'fname' => 'required',
-            'lname' => 'required',
             'fullname' => 'required',
             'username' => 'required|unique:users,username,' . $user->id,
         ]);
 
-        $user->first_name = $this->fname;
-        $user->last_name = $this->lname;
-        $user->display_name = $this->fullname;
+        $user->full_name = $this->fullname;
         $user->email = $this->email;
         $user->username = $this->username;
 

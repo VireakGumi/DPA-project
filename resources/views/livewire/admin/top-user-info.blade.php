@@ -205,7 +205,7 @@
                                     <img alt="avatar" src="{{ $user->picture }}" class="rounded-circle" />
                                 </div>
                                 <div class="ms-3 lh-1">
-                                    <h5 class="mb-1"> {{ $user->display_name }} </h5>
+                                    <h5 class="mb-1"> {{ $user->full_name }} </h5>
                                     <p class="mb-0">{{ $user->email }}</p>
                                 </div>
                             </div>

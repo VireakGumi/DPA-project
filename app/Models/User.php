@@ -24,9 +24,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'display_name',
+        'full_name',
         'email',
         'password',
         'username',
@@ -80,7 +78,7 @@ class User extends Authenticatable
 
     public static function AuthResourceObj($id, $token = '')
     {
-        $user = User::where('id', $id)->first(['id', 'username', 'display_name', 'email', 'email_verified_at', 'picture', 'status', 'created_at']);
+        $user = User::where('id', $id)->first(['id', 'username', 'full_name', 'email', 'email_verified_at', 'picture', 'status', 'created_at']);
         if (strlen($token) > 0)
             $user->token = $token;
         return $user;
@@ -90,20 +88,7 @@ class User extends Authenticatable
     {
         $token = get_session_key('token');
         $user = User::whereHas('tokens', function ($query) use ($token) {
-            $query->where('id', $token);
-        })->first([
-                    'id',
-                    'first_name',
-                    'last_name',
-                    'username',
-                    'display_name',
-                    'email',
-                    'email_verified_at',
-                    'picture',
-                    'bio',
-                    'status',
-                    'created_at'
-                ]);
+            $query->where('id', $token); })->first(['id', 'username', 'full_name', 'email', 'email_verified_at', 'picture', 'bio', 'status', 'created_at']);
         if (!$user)
             return null;
         return $user;

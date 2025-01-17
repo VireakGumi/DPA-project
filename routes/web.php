@@ -24,6 +24,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Protected routes for authenticated admins
     Route::controller(AdminController::class)->group(function () {
         Route::get('/dashboard', 'adminDashboard')->name('dashboard')->middleware('login', 'admin');
+        Route::get('/profile-edit', 'adminProfileEdit')->name('profile_edit')->middleware('login', 'admin');
     });
 });
 

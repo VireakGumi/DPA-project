@@ -16,4 +16,14 @@ class AdminController extends Controller
         ];
         return view('back.pages.dashboard', $data);
     }
+
+    public function adminProfileEdit(Request $request)
+    {
+        $data = [
+            'pageTitle' => 'Profile Edit',
+            'user_profile' => new UserResource(User::GetUserProfile()),
+        ];
+        return view('back.pages.profile-edit', $data);
+    }
+
 }

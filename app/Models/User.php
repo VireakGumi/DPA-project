@@ -16,7 +16,7 @@ class User extends Authenticatable
 
     public const STATUS_IS_ACTIVE = 1;
     public const STATUS_IS_NOT_ACTIVE = 2;
-    public const DEFAULT_AVATAR  = "no_photo.jpg";
+    public const DEFAULT_AVATAR = "no_photo.jpg";
 
     /**
      * The attributes that are mass assignable.
@@ -58,10 +58,15 @@ class User extends Authenticatable
         ];
     }
 
+    public function getPictureAttribute($value)
+    {
+        return $value ? asset('/images/users/' . $value) : asset('/images/users/no_photo.jpg');
+    }
+
     /**
-    * Relationship
-    *
-    */
+     * Relationship
+     *
+     */
 
     public function roles()
     {
@@ -69,21 +74,38 @@ class User extends Authenticatable
     }
 
     /**
-    * Functionality Helper
-    *
-    */
+     * Functionality Helper
+     *
+     */
 
     public static function AuthResourceObj($id, $token = '')
     {
-        $user = User::where('id', $id)->first(['id', 'username', 'display_name', 'email', 'email_verified_at','picture', 'status','created_at']);
-        if (strlen($token) > 0) $user->token = $token;
+        $user = User::where('id', $id)->first(['id', 'username', 'display_name', 'email', 'email_verified_at', 'picture', 'status', 'created_at']);
+        if (strlen($token) > 0)
+            $user->token = $token;
         return $user;
     }
 
-    protected function GetUserProfile() {
+    protected function GetUserProfile()
+    {
         $token = get_session_key('token');
-        $user  = User::whereHas('tokens', function($query) use ($token) {$query->where('id', $token); })->first(['id', 'username', 'display_name', 'email', 'email_verified_at','picture', 'bio','status','created_at']);
-        if(!$user) return null;
+        $user = User::whereHas('tokens', function ($query) use ($token) {
+            $query->where('id', $token);
+        })->first([
+                    'id',
+                    'first_name',
+                    'last_name',
+                    'username',
+                    'display_name',
+                    'email',
+                    'email_verified_at',
+                    'picture',
+                    'bio',
+                    'status',
+                    'created_at'
+                ]);
+        if (!$user)
+            return null;
         return $user;
     }
 }

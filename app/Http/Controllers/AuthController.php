@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\UserDevice;
 use Carbon\Carbon;
+use Illuminate\Container\Attributes\Auth;
 use Stevebauman\Location\Facades\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -52,7 +53,14 @@ class AuthController extends Controller
     // logout route
     public function logout(Request $req)
     {
-        $req->user('sanctum')->currentAccessToken()->delete();
+        $token = $req->session()->get('token');
+        
+        $user = User::whereHas('tokens', function ($query) use ($token) {
+            $query->where('id', $token);
+        })->first(['id']);
+
+        if ($user) $user->tokens()->where('id', $token)->delete();
+        
         destroy_session_key();
         return redirect()->route('login')->with('message', 'User logged out successfully.');
     }
@@ -80,7 +88,7 @@ class AuthController extends Controller
         return view('back.pages.auth.register', $data);
     }
 
-    public function RegisterHandler(RegisterRequest $req) 
+    public function RegisterHandler(RegisterRequest $req)
     {
         $user = new User($req->only(['email', 'password']));
         $user->full_name = $req->full_name;
@@ -116,5 +124,4 @@ class AuthController extends Controller
         store_session_key(User::AuthResourceObj($user->id, $token->plainTextToken));
         return redirect()->route('u.home')->with('message', 'User Register successfully.');
     }
-
 }

@@ -16,6 +16,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/register', 'RegisterForm')->name('register')->middleware('is.auth'); // Added unique name
     Route::post('/register', 'RegisterHandler')->name('register_handler'); // Added unique name
     Route::get('/forget-password', 'ForgetForm')->name('forgot')->middleware('is.auth'); // Changed name to avoid conflict
+    Route::post('/logout',  'logout')->name('logout')->middleware('login'); //;
 });
 
 /**

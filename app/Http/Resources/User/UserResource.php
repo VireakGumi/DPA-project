@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'username'          => $this->username,
             'email'             => $this->email,
             'is_email_verified' => $this->email_verified_at == null ? 0 : 1,
-            'picture'           => asset('storage/pictures/' . $this->picture),
+            'picture'           => asset('storage/images/users/' . $this->picture),
             'bio'               => $this->bio,
             'status'            => $this->status,
             'created_at'        => $this->created_at,

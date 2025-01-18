@@ -25,4 +25,11 @@ class UserController extends Controller
         ];
         return view('back.pages.user.search', $data);
     }
+
+    public function notFound() {
+        $data = [
+            'pageTitle' => "You're Lost",
+        ];
+        return view('back.pages.404.404', $data );
+    }
 }

@@ -36,4 +36,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/', 'userHome')->name('u.home'); // Added unique name
     Route::get('/search', 'uSearch')->name('u.search');
+
+    // 404 route
+
+    Route::get('/404', 'notFound')->name('404');
+
 });

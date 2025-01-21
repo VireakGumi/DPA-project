@@ -27,6 +27,6 @@ class CheckAdminRole
         if ($userRole == Role::ROLE_ADMIN) {
             return $next($req);
         }
-        return redirect()->route('login')->with('error', 'You are not authorized to perform this action.');
+        return redirect()->route('404')->with('error', 'You are not authorized to perform this action.');
     }
 }

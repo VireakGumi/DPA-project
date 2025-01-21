@@ -23,6 +23,9 @@ class UserSeeder extends Seeder
             $user = User::create($value);
             $user->email_verified_at = Carbon::now();
             $user->roles()->sync([Role::ROLE_ADMIN]);
+            if($value['id'] != 1) {
+                $user->roles()->sync([Role::ROLE_USER]);
+            }
             $user->save();
         }
     }

@@ -40,6 +40,7 @@ class UserController extends Controller
     public function notFound() {
         $data = [
             'pageTitle' => "You're Lost",
+            'user_profile' => new UserResource(User::GetUserProfile()),
         ];
         return view('back.pages.404.404', $data );
     }

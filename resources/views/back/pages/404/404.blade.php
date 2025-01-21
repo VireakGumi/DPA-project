@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="/back/assets/css/theme.min.css">
     <link rel="stylesheet" href="/back/assets/css/404.css">
+
 </head>
 
 <body>
@@ -305,7 +306,11 @@
                         How you got here is a mystery. But you can click the button below
                         to go back to the homepage.
                     </p>
-                    <a class="btn blue" href="{{route('u.home')}}">HOME</a>
+                    @if ($user_profile->roles->first()->id == 1)
+                        <a class="btn blue" href="{{route('admin.dashboard')}}">DASHBOARD</a>
+                    @else 
+                        <a class="btn blue" href="{{route('u.home')}}">HOME</a>
+                    @endif
                 </div>
             </div>
         </div>

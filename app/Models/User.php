@@ -78,7 +78,7 @@ class User extends Authenticatable
 
     public static function AuthResourceObj($id, $token = '')
     {
-        $user = User::where('id', $id)->first([
+        $user = User::where('id', $id)->with(['roles:id,name'])->first([
             'id',
             'username',
             'full_name',
@@ -98,17 +98,17 @@ class User extends Authenticatable
         $token = get_session_key('token');
         $user = User::whereHas('tokens', function ($query) use ($token) {
             $query->where('id', $token);
-        })->first([
-                    'id',
-                    'username',
-                    'full_name',
-                    'email',
-                    'email_verified_at',
-                    'picture',
-                    'bio',
-                    'status',
-                    'created_at'
-                ]);
+        })->with(['roles:id,name'])->first([
+            'id',
+            'username',
+            'full_name',
+            'email',
+            'email_verified_at',
+            'picture',
+            'bio',
+            'status',
+            'created_at'
+        ]);
         if (!$user)
             return null;
         return $user;

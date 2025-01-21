@@ -54,13 +54,13 @@ class AuthController extends Controller
     public function logout(Request $req)
     {
         $token = $req->session()->get('token');
-        
+
         $user = User::whereHas('tokens', function ($query) use ($token) {
             $query->where('id', $token);
         })->first(['id']);
 
         if ($user) $user->tokens()->where('id', $token)->delete();
-        
+
         destroy_session_key();
         return redirect()->route('login')->with('message', 'User logged out successfully.');
     }

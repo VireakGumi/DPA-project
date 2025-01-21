@@ -26,6 +26,17 @@ class UserController extends Controller
         return view('back.pages.user.search', $data);
     }
 
+    public function uProfile(Request $request)
+    {
+        $data = [
+            'pageTitle' => 'Profile Page',
+            'user_profile' => new UserResource(User::GetUserProfile()),
+        ];
+        return view('back.pages.user.Profile', $data);
+    }
+
+
+
     public function notFound() {
         $data = [
             'pageTitle' => "You're Lost",

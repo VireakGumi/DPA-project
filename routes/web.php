@@ -15,8 +15,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'LoginHandler')->name('login_handler'); // Changed name to avoid conflict
     Route::get('/register', 'RegisterForm')->name('register')->middleware('is.auth'); // Added unique name
     Route::post('/register', 'RegisterHandler')->name('register_handler'); // Added unique name
-    Route::get('/forget-password', 'ForgetForm')->name('forgot')->middleware('is.auth'); // Changed name to avoid conflict
-    Route::post('/logout',  'logout')->name('logout')->middleware('login'); //;
+    Route::get('/forget-password', action: 'ForgetForm')->name('forgot')->middleware('is.auth'); // Changed name to avoid conflict
+    Route::post('/logout', 'logout')->name('logout')->middleware('login'); //;
+
 });
 
 /**
@@ -27,6 +28,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('/dashboard', 'adminDashboard')->name('dashboard')->middleware('login', 'admin');
         Route::get('/profile-edit', 'adminProfileEdit')->name('profile_edit')->middleware('login', 'admin');
+
     });
 });
 
@@ -36,6 +38,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::controller(UserController::class)->group(function () {
     Route::get('/', 'userHome')->name('u.home'); // Added unique name
     Route::get('/search', 'uSearch')->name('u.search');
+    Route::get('/profile-edit', 'uProfile')->name('u.profile');
 
     // 404 route
 

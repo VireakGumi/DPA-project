@@ -3,7 +3,7 @@
         <a id="nav-toggle" href="#">
             <i class="fe fe-menu"></i>
         </a>
-        <div class="ms-lg-3 d-none d-md-none d-lg-block">
+        {{-- <div class="ms-lg-3 d-none d-md-none d-lg-block">
             <!-- Form -->
             <form class="d-flex align-items-center">
                 <span class="position-absolute ps-3 search-icon">
@@ -11,7 +11,7 @@
                 </span>
                 <input type="search" class="form-control ps-6" placeholder="Search Entire Dashboard" />
             </form>
-        </div>
+        </div> --}}
         <!--Navbar nav -->
         <div class="ms-auto d-flex">
             <div class="dropdown">
@@ -271,7 +271,7 @@
                                         @csrf
                                         <button type="submit" class="dropdown-item" style="background: none; border: none; padding: 0;">
                                             <i class="fe fe-power me-2"></i>
-                                            Sign Out
+                                            Log Out
                                         </button>
                                     </form>
                                 </a>

@@ -1,4 +1,4 @@
-@extends('back.layout.user-pages-layout')
+@extends('back.layout.user.pages-layout')
 @section('pageTitle', isset($pageTitle) ? $pageTitle : 'Page Title Here')
 @section('content')
     <main>

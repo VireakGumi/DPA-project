@@ -28,6 +28,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('/dashboard', 'adminDashboard')->name('dashboard')->middleware('login', 'admin');
         Route::get('/profile-edit', 'adminProfileEdit')->name('profile_edit')->middleware('login', 'admin');
+        Route::get('/post', 'adminPostView')->name('post')->middleware('login', 'admin');
+        Route::get('/post/overview', 'adminPostOverview')->name('postOverview')->middleware('login', 'admin');
 
     });
 });

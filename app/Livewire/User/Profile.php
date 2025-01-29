@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\User;
 
 use Livewire\Component;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Livewire\User\TopUserInfo;
 
-class ProfileEdit extends Component
+class Profile extends Component
 {
-
     public $tab = null;
     public $tabname = 'personal_details';
     protected $queryString = ['tab' => ['keep' => true]];
@@ -66,12 +66,11 @@ class ProfileEdit extends Component
         }
 
 
-
     }
 
     public function render()
     {
-        return view('livewire.admin.profile-edit', [
+        return view('livewire.user.profile', [
             'user' => new UserResource(User::GetUserProfile()),
         ]);
     }

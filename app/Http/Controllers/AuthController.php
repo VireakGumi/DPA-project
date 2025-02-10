@@ -85,7 +85,7 @@ class AuthController extends Controller
             'pageTitle' => 'User Register',
         ];
 
-        return view('back.pages.auth.register', $data);
+        return view('back.pages.auth.Register', $data);
     }
 
     public function RegisterHandler(RegisterRequest $req)

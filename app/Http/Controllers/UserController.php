@@ -14,7 +14,7 @@ class UserController extends Controller
             'pageTitle' => 'Home Page',
             'user_profile' => new UserResource(User::GetUserProfile()),
         ];
-        return view('back.pages.user.home', $data);
+        return view('back.pages.user.Home', $data);
     }
 
     public function uSearch(Request $request)
@@ -23,7 +23,7 @@ class UserController extends Controller
             'pageTitle' => 'Search Page',
             'user_profile' => new UserResource(User::GetUserProfile()),
         ];
-        return view('back.pages.user.search', $data);
+        return view('back.pages.user.Search', $data);
     }
 
     public function notFound() {

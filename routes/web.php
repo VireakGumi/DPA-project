@@ -31,6 +31,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/post', 'adminPostView')->name('post')->middleware('login', 'admin');
         Route::get('/post/overview', 'adminPostOverview')->name('postOverview')->middleware('login', 'admin');
 
+        // handlers function
+        Route::post('/post', 'storeProject')->name('store.project')->middleware('login', 'admin');
+
     });
 });
 

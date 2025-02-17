@@ -1,5 +1,5 @@
 <div>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg container px-0 shadow-none">
         <div class="container-fluid px-0">
             <div class="d-flex">
                 <a class="navbar-brand" href="{{ route('u.home') }}"><img src="/back/assets/images/brand/logo/logo.svg"

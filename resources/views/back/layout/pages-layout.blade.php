@@ -30,6 +30,9 @@
     <link rel="stylesheet" href="/back/assets/css/theme.min.css">
     <link rel="stylesheet" href="/extra-assets/css/ijabo.min.css">
 
+    <style>
+
+    </style>
     <link rel="canonical" href="https://geeksui.codescandy.com/geeks/pages/dashboard/dashboard-analytics.html">
 
     <title>@yield('pageTitle')</title>
@@ -154,7 +157,9 @@
             <!-- card body -->
             <div class="container">
                 <!-- form -->
-                <form class="row needs-validation" novalidate>
+                <<form id="projectForm" action="{{ route('admin.store.project') }}" method="POST" novalidate
+                    enctype="multipart/form-data">
+                    @csrf
                     <!-- form group -->
                     <div class="mb-3 col-12">
                         <label class="form-label" for="projectTitle">
@@ -167,32 +172,50 @@
                     </div>
                     <!-- form group -->
                     <div class="mb-3 col-12">
-                        <label class="form-label" for="keyFeature">
-                            Key Features
+                        <label class="form-label" for="url">
+                            URL
+                            <span class="text-danger">*</span>
                         </label>
-                        <input type="text" class="form-control mb-3 " id="keyFeatures0"
-                            placeholder="Enter 1st key feature" required />
-                        <input type="text" class="form-control mb-3 " id="keyFeatures1"
-                            placeholder="Enter 2nd key feature" required />
-                        <input type="text" class="form-control" id="keyFeatures2"
-                            placeholder="Enter 3rd key feature" required />
-                        <div class="invalid-feedback">Please enter key features</div>
+                        <input type="text" class="form-control" id="url" placeholder="Enter URL of project"
+                            required />
+                        <div class="invalid-feedback">Please enter URL</div>
                     </div>
+                    <!-- form group -->
+                    <div class="mb-3 col-12">
+                        <div id="keyFeaturesContainer">
+                            <label class="form-label" for="keyFeature">Key Features</label>
+                            <div class="feature-group mb-3 input-group">
+                                <input type="text" class="form-control" name="keyFeatures[]"
+                                    placeholder="Enter key feature" required />
+                                <button type="button" class="btn btn-danger btn-remove-feature">X</button>
+                            </div>
+                        </div>
+
+                        <input type="button" class="btn btn-primary" id="addFeatureButton" value="Add more"
+                            style="border: 1px gray thick" />
+
+                        <div id="featureCountWarning" class="text-danger mt-2" style="display: none;">You can only
+                            add up to 8 key features.</div>
+                    </div>
+
                     <!-- form group -->
                     <div class="mb-3 col-12">
                         <label class="form-label" for="description">Description</label>
                         <textarea class="form-control" id="description" placeholder="Enter brief about project..." rows="3" required></textarea>
                         <div class="invalid-feedback">Please enter project description</div>
                     </div>
-                    <!-- form group -->
-                    <div class="col-md-3 col-12 mb-4">
-                        <div>
-                            <!-- logo -->
-                            <h5 class="mb-3">Project Logo</h5>
-                            <div class="icon-shape icon-xxl border rounded position-relative">
-                                <span class="position-absolute"><i class="bi bi-image fs-3"></i></span>
-                                <input class="form-control border-0 opacity-0" type="file ">
+                    <div class="col-md-12 col-12 mb-4">
+                        <h5 class="mb-3">Project Logo</h5>
+                        <div class="row container">
+                            <div class="icon-shape icon-xxl border rounded position-relative col-3 "
+                                style="top: 50%; height: 100px;">
+                                <span class="position-absolute m-5"><i class="bi bi-image fs-2"></i></span>
+                                <input class="form-control border-0 opacity-0" type="file" id="logoInput" required
+                                    accept="image/*">
                             </div>
+
+                            <img id="logoPreview" class="img-fluid rounded col-5"
+                                style="display: none; height: 100%;" src="#" alt="Logo Preview">
                         </div>
                     </div>
                     <div class="col-12 mb-4">
@@ -206,7 +229,7 @@
                         <button type="button" class="btn btn-outline-primary ms-2" data-bs-dismiss="offcanvas"
                             aria-label="Close">Close</button>
                     </div>
-                </form>
+                    </form>
             </div>
         </div>
     </div>
@@ -253,6 +276,113 @@
                 html: e.detail[0].message,
                 delay: 2500
             })
+        });
+        $(document).ready(function() {
+            // Logo Preview
+            $('#logoInput').on('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#logoPreview').attr('src', e.target.result).show();
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    $('#logoPreview').hide();
+                }
+            });
+            $('#projectForm').on('submit', function(event) {
+                let isValid = true;
+
+                // Check project title
+                const url = $('#url');
+                if (url.val().trim() === '') {
+                    url.addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    url.removeClass('is-invalid');
+                }
+
+                const projectTitle = $('#projectTitle');
+                if (projectTitle.val().trim() === '') {
+                    projectTitle.addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    projectTitle.removeClass('is-invalid');
+                }
+
+                // Check description
+                const description = $('#description');
+                if (description.val().trim() === '') {
+                    description.addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    description.removeClass('is-invalid');
+                }
+
+                // Check key features
+                const features = $('input[name="keyFeatures[]"]');
+                features.each(function() {
+                    if ($(this).val().trim() === '') {
+                        $(this).addClass('is-invalid');
+                        isValid = false;
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+                });
+
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                    return
+                }
+
+                let formData = new formData(this);
+
+                // Add Dropzone files to FormData
+                let dropzoneFiles = myDropzone.getAcceptedFiles();
+                dropzoneFiles.forEach(function(file) {
+
+                    formData.append('cover_thumbnails[]', file); // Append each file
+                })
+            });
+            const featureCountWarning = $('#featureCountWarning');
+
+            $('#addFeatureButton').on('click', function() {
+                const featuresContainer = $('#keyFeaturesContainer');
+                const featureCount = featuresContainer.find('.feature-group').length;
+
+                if (featureCount < 8) {
+                    const newFeatureGroup = `
+                        <div class="feature-group mb-3 input-group">
+                            <input type="text" class="form-control" name="keyFeatures[]" placeholder="Enter key feature" required />
+                            <button type="button" class="btn btn-danger btn-remove-feature">X</button>
+                        </div>
+                    `;
+                    featuresContainer.append(newFeatureGroup);
+                    featureCountWarning.hide();
+                } else {
+                    featureCountWarning.show();
+                }
+            });
+
+            $('#keyFeaturesContainer').on('click', '.btn-remove-feature', function() {
+                $(this).parent().remove();
+                featureCountWarning.hide();
+            });
+            $('#offcanvasRight').on('hidden.bs.offcanvas', function() {
+                // Reset all text inputs and textareas
+                $(this).find('input[type="text"], input[type="file"], textarea').val('');
+                // Reset Dropzone
+                myDropzone.removeAllFiles(true);
+                // Remove additional key features
+                $('#keyFeaturesContainer').empty().append(`
+            <label class="form-label" for="keyFeature">Key Features</label>
+            <div class="feature-group mb-3 input-group">
+                <input type="text" class="form-control" name="keyFeatures[]" placeholder="Enter key feature" required />
+                <button type="button" class="btn btn-danger btn-remove-feature">X</button>
+            </div>
+        `);
+            });
         });
     </script>
     @stack('scripts')

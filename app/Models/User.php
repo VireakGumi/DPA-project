@@ -70,6 +70,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'user_role')->withTimestamps();
     }
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'user_id')->withTimestamps();
+    }
 
     /**
      * Functionality Helper
